@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: acp-polymarket-agent
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=acp_agent
+      - DATABASE_PORT=5432
+      - VIRTUAL_TOKEN_ADDRESS=${VIRTUAL_TOKEN_ADDRESS}
+      - WALLET_PRIVATE_KEY=${WALLET_PRIVATE_KEY}
+      - ACP_AGENT_ID=${ACP_AGENT_ID}
+      - ACP_AGENT_NAME=${ACP_AGENT_NAME}
+      - ACP_SERVICE_REGISTRY=${ACP_SERVICE_REGISTRY}
+      - POLYMARKET_API_URL=${POLYMARKET_API_URL}
+      - POLYMARKET_API_KEY=${POLYMARKET_API_KEY}
+      - POLYSIGHTS_API_URL=${POLYSIGHTS_API_URL}
+      - POLYSIGHTS_API_KEY=${POLYSIGHTS_API_KEY}
+    volumes:
+      - ./app:/app/app
+    command: >
+      sh -c "python -m app.db.create_tables &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  db:
+    image: postgres:14
+    container_name: acp-agent-db
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=acp_agent
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: acp-agent-pgadmin
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL:-admin@acp-agent.com}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD:-admin}
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:
