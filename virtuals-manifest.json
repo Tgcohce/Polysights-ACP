@@ -1,0 +1,57 @@
+{
+  "name": "ACP Polymarket Trading Agent",
+  "version": "1.0.0",
+  "description": "Autonomous prediction market trading agent with ACP integration",
+  "type": "trading_agent",
+  "capabilities": [
+    "market_data_analysis",
+    "order_execution",
+    "risk_management", 
+    "arbitrage_detection",
+    "portfolio_optimization"
+  ],
+  "protocols": ["ACP", "Polymarket", "ERC-6551"],
+  "runtime": {
+    "type": "docker",
+    "image": "acp-polymarket-agent:latest",
+    "port": 8000,
+    "health_check": "/health"
+  },
+  "resources": {
+    "cpu": "1000m",
+    "memory": "2Gi",
+    "storage": "10Gi"
+  },
+  "environment": {
+    "required": [
+      "POLYMARKET_API_KEY",
+      "POLYMARKET_SECRET", 
+      "POLYMARKET_PASSPHRASE",
+      "ACP_WALLET_PRIVATE_KEY",
+      "DATABASE_URL",
+      "VIRTUAL_TOKEN_ADDRESS"
+    ],
+    "optional": [
+      "POLYSIGHTS_API_KEY",
+      "BASE_RPC_URL",
+      "VIRTUALS_API_URL"
+    ]
+  },
+  "endpoints": {
+    "health": "/health",
+    "status": "/",
+    "services": "/services",
+    "dashboard": "/dashboard",
+    "api": "/docs"
+  },
+  "permissions": {
+    "network": ["api.polymarket.com", "base.org", "virtuals.io"],
+    "storage": ["read", "write"],
+    "wallet": ["sign", "transact"]
+  },
+  "pricing": {
+    "model": "usage_based",
+    "base_fee": "10 VIRTUAL/day",
+    "transaction_fee": "0.1% of trade volume"
+  }
+}
