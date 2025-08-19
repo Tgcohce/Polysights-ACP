@@ -47,6 +47,9 @@ class SmartWallet:
             "VIRTUAL_TOKEN_ADDRESS",
             "0x0000000000000000000000000000000000000000"  # Replace with actual token address
         )
+        # Convert to checksum address for web3.py compatibility
+        self.virtual_token_address = self.w3.to_checksum_address(self.virtual_token_address)
+        
         self.virtual_token_abi = self._load_virtual_token_abi()
         self.virtual_token_contract = self.w3.eth.contract(
             address=self.virtual_token_address,

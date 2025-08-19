@@ -150,7 +150,7 @@ class AgentNetworkManager:
     establishing collaborations, and messaging between agents.
     """
     
-    def __init__(self, wallet: SmartWallet):
+    def __init__(self, wallet: SmartWallet = None):
         """
         Initialize the agent network manager.
         

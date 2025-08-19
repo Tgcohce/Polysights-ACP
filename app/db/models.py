@@ -79,6 +79,7 @@ class Job(Base):
     requester_name = Column(String(128))
     title = Column(String(256), nullable=False)
     description = Column(Text)
+    job_type = Column(String(64), nullable=False)
     status = Column(Enum(JobStatus), nullable=False, default=JobStatus.PENDING)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -89,7 +90,8 @@ class Job(Base):
     completion_percentage = Column(Float, default=0.0)
     result_summary = Column(Text)
     error_message = Column(Text)
-    metadata = Column(JSON)
+    parameters = Column(JSON)
+    extra_data = Column(JSON)
     
     # Relationships
     trades = relationship("Trade", back_populates="job")
@@ -137,7 +139,7 @@ class Trade(Base):
     profit_loss_percentage = Column(Float)
     execution_priority = Column(Enum(ExecutionPriority), default=ExecutionPriority.NORMAL)
     error_message = Column(Text)
-    metadata = Column(JSON)
+    extra_data = Column(JSON)
     
     # Relationships
     job = relationship("Job", back_populates="trades")
@@ -184,7 +186,7 @@ class Position(Base):
     stop_loss = Column(Float)
     take_profit = Column(Float)
     is_active = Column(Boolean, default=True, index=True)
-    metadata = Column(JSON)
+    extra_data = Column(JSON)
     
     # Relationships
     trade = relationship("Trade", back_populates="positions")

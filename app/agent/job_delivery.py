@@ -408,3 +408,7 @@ def initialize_delivery_manager(wallet: SmartWallet):
     global delivery_manager
     delivery_manager = ResultDeliveryManager(wallet)
     return delivery_manager
+
+
+# Alias for backward compatibility
+JobDeliveryManager = ResultDeliveryManager

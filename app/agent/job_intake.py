@@ -548,6 +548,9 @@ class JobIntakeManager:
         return {"errors": errors, "warnings": warnings}
 
 
+# Alias for backward compatibility
+JobIntakeValidator = JobIntakeManager
+
 # Global instance for easy access
 intake_manager = None
 

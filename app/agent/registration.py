@@ -11,10 +11,10 @@ from app.agent.profile import get_agent_metadata
 from app.wallet.erc6551 import SmartWallet
 
 
-class ACPRegistrationManager:
+class ACPRegistration:
     """Manages ACP agent registration and authentication."""
     
-    def __init__(self, wallet: SmartWallet):
+    def __init__(self, wallet: SmartWallet = None):
         """
         Initialize the ACP Registration Manager.
         

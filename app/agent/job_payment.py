@@ -515,3 +515,7 @@ def initialize_payment_processor(wallet: SmartWallet):
     global payment_processor
     payment_processor = PaymentProcessor(wallet)
     return payment_processor
+
+
+# Alias for backward compatibility
+JobPaymentProcessor = PaymentProcessor

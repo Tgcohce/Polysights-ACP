@@ -2,10 +2,10 @@
 Configuration management module for the ACP Polymarket Trading Agent.
 """
 import os
-from typing import Dict, Any, Optional
+from typing import Optional, List, Any, Dict
 
-from dotenv import load_dotenv
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
@@ -25,6 +25,30 @@ class TradingConfig(BaseModel):
     )
     min_arbitrage_threshold: float = Field(
         0.005, description="Minimum arbitrage profit threshold as a decimal"
+    )
+    max_concurrent_jobs: int = Field(
+        5, description="Maximum number of concurrent jobs to process"
+    )
+    restricted_regions: List[str] = Field(
+        default_factory=lambda: ["US", "UK"], description="List of restricted regions for trading"
+    )
+    max_position_percentage: float = Field(
+        0.1, description="Maximum position size as percentage of portfolio (e.g., 0.1 = 10%)"
+    )
+    min_requester_reputation: float = Field(
+        0.7, description="Minimum requester reputation score (0.0 to 1.0)"
+    )
+    max_daily_loss: float = Field(
+        500.0, description="Maximum daily loss limit in USD"
+    )
+    stop_loss_percentage: float = Field(
+        0.05, description="Stop loss percentage (e.g., 0.05 = 5%)"
+    )
+    take_profit_percentage: float = Field(
+        0.15, description="Take profit percentage (e.g., 0.15 = 15%)"
+    )
+    fee_percentage: float = Field(
+        0.02, description="Trading fee percentage (e.g., 0.02 = 2%)"
     )
 
 
@@ -99,6 +123,23 @@ class DatabaseConfig(BaseModel):
     )
 
 
+class AgentConfig(BaseModel):
+    """Agent configuration."""
+
+    agent_id: str = Field(
+        os.getenv("AGENT_ID", "acp-polymarket-agent"),
+        description="Unique agent identifier",
+    )
+    agent_name: str = Field(
+        os.getenv("AGENT_NAME", "ACP Polymarket Trading Agent"),
+        description="Human-readable agent name",
+    )
+    version: str = Field(
+        os.getenv("AGENT_VERSION", "1.0.0"),
+        description="Agent version",
+    )
+
+
 class Config:
     """Main configuration class for the application."""
 
@@ -108,8 +149,22 @@ class Config:
         self.polymarket = PolymarketConfig()
         self.polysights = PolysightsConfig()
         self.database = DatabaseConfig()
+        self.agent = AgentConfig()
         self.debug = os.getenv("DEBUG", "False").lower() == "true"
 
+    def get(self, key: str, default: Any = None) -> Any:
+        """Get configuration value by key with optional default."""
+        # Support environment variable access
+        env_value = os.getenv(key)
+        if env_value is not None:
+            return env_value
+            
+        # Support nested attribute access
+        if hasattr(self, key.lower()):
+            return getattr(self, key.lower())
+            
+        return default
+    
     def as_dict(self) -> Dict[str, Any]:
         """Convert config to dictionary (for logging/display)."""
         return {

@@ -15,6 +15,33 @@ import numpy as np
 from app.polymarket.client import PolymarketClient
 from app.polysights.client import PolysightsClient
 from app.utils.config import config
+from pydantic import BaseModel
+from enum import Enum
+
+
+class RecommendationType(Enum):
+    """Types of trading recommendations."""
+    BUY = "buy"
+    SELL = "sell"
+    HOLD = "hold"
+    CLOSE = "close"
+
+
+class TradingRecommendation(BaseModel):
+    """Trading recommendation with confidence and reasoning."""
+    
+    market_id: str
+    outcome_id: str
+    recommendation: RecommendationType
+    confidence: float  # 0.0 to 1.0
+    price_target: Optional[float] = None
+    size_recommendation: Optional[float] = None
+    reasoning: str
+    risk_level: str  # "low", "medium", "high"
+    timestamp: datetime
+    
+    class Config:
+        use_enum_values = True
 
 
 class MarketAnalyzer:

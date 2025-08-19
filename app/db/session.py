@@ -51,6 +51,10 @@ def create_db_engine(echo: bool = False):
     database_url = get_database_url()
     
     # Configure engine with appropriate options for production
+    connect_args = {}
+    if "sqlite" not in database_url.lower():
+        connect_args = {"connect_timeout": 10}
+    
     engine = create_engine(
         database_url,
         echo=echo,
@@ -58,7 +62,7 @@ def create_db_engine(echo: bool = False):
         pool_recycle=3600,
         pool_size=10,
         max_overflow=20,
-        connect_args={"connect_timeout": 10}
+        connect_args=connect_args
     )
     
     return engine

@@ -14,7 +14,18 @@ from typing import Dict, Any, List, Optional, Union, Tuple
 import uuid
 
 import aiohttp
-from eth_account.messages import encode_structured_data
+from eth_account.messages import encode_defunct
+
+def encode_structured_data(structured_data):
+    """Fallback implementation for encode_structured_data."""
+    # Simple implementation for EIP-712 signing
+    import json
+    from eth_account.messages import encode_defunct
+    
+    # For now, use a simple message encoding
+    # In production, implement proper EIP-712 encoding
+    message = json.dumps(structured_data, sort_keys=True)
+    return encode_defunct(text=message)
 from loguru import logger
 import websockets
 

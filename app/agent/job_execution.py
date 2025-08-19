@@ -64,8 +64,8 @@ class JobExecutionManager:
             JobState.PROCESSING, self.handle_processing_job
         )
         
-        logger.info("Initialized JobExecutionManager")
-    
+        logger.info(f"Job execution manager initialized with {len(self.job_processors)} handlers")
+
     def _initialize_processors(self) -> Dict[str, Callable]:
         """
         Initialize job type-specific processor functions.
@@ -779,3 +779,7 @@ def initialize_execution_manager(
         market_analyzer=market_analyzer
     )
     return execution_manager
+
+
+# Alias for backward compatibility
+JobExecutionEngine = JobExecutionManager

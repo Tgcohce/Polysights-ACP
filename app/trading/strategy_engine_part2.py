@@ -756,6 +756,10 @@ class StrategyEngine:
                 metrics["strategies"][strategy_type] = strategy.get_performance_metrics()
         
         return metrics
+    
+    def get_available_strategies(self) -> List[str]:
+        """Get list of available trading strategies."""
+        return [strategy_type.value for strategy_type in self.strategies.keys()]
 
 
 # Global instance

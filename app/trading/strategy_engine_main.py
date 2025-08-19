@@ -82,7 +82,7 @@ class TradingStrategyManager:
         )
         
         # Initialize strategy engine
-        self.strategy_engine = initialize_strategy_engine(
+        self.strategy_engine = StrategyEngine(
             self.polymarket_client,
             self.polysights_client,
             self.market_analyzer,
@@ -91,6 +91,12 @@ class TradingStrategyManager:
         
         self.initialized = True
         logger.info("Trading strategy manager initialized")
+    
+    def get_available_strategies(self) -> List[str]:
+        """Get list of available trading strategies."""
+        if self.strategy_engine:
+            return self.strategy_engine.get_available_strategies()
+        return ["arbitrage", "momentum", "mean_reversion", "event_driven", "smart_money"]
     
     async def start(self):
         """Start the trading strategy manager and all components."""
@@ -457,3 +463,7 @@ trading_manager = TradingStrategyManager()
 def get_trading_manager() -> TradingStrategyManager:
     """Get the global trading manager instance."""
     return trading_manager
+
+
+# Alias for backward compatibility
+TradingStrategyEngine = TradingStrategyManager
