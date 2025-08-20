@@ -160,14 +160,18 @@ async def get_services() -> Dict[str, Any]:
 
 # Import router modules
 # This is done after app initialization to avoid circular imports
-from app.agent.routes import router as agent_router
-from app.trading.routes import router as trading_router
+from .api.routes import router as api_router
+from .api.analytics_endpoints import router as analytics_router
+from .api.trading_endpoints import router as trading_router
+from app.trading.routes import router as trading_routes
 from app.ui.dashboard import router as dashboard_router
 
 # Register routers
-app.include_router(agent_router, prefix="/agent", tags=["agent"])
-app.include_router(trading_router, prefix="/trading", tags=["trading"])
-app.include_router(dashboard_router, prefix="/dashboard", tags=["dashboard"])
+app.include_router(api_router, prefix="/api", tags=["api"])
+app.include_router(trading_router, prefix="/api/trading", tags=["trading"])
+app.include_router(dashboard_router, prefix="/api/dashboard", tags=["dashboard"])
+app.include_router(analytics_router, prefix="/api/analytics", tags=["analytics"])
+app.include_router(trading_routes, prefix="/trading", tags=["trading"])
 
 
 if __name__ == "__main__":

@@ -1,57 +1,118 @@
 {
-  "name": "ACP Polymarket Trading Agent",
+  "name": "ACP Polymarket Analytics & Trading Agent",
+  "description": "Advanced AI agent providing comprehensive Polymarket analytics and automated trading capabilities using wallet signatures - no KYC required",
   "version": "1.0.0",
-  "description": "Autonomous prediction market trading agent with ACP integration",
-  "type": "trading_agent",
+  "agent_type": "analytics_trading",
   "capabilities": [
-    "market_data_analysis",
-    "order_execution",
-    "risk_management", 
-    "arbitrage_detection",
-    "portfolio_optimization"
+    "Real-time market analytics and sentiment analysis",
+    "Insider trading activity monitoring",
+    "Market opportunity detection and scoring",
+    "Cross-platform arbitrage identification",
+    "Direct CLOB trading with wallet signatures",
+    "Automated trading strategies (momentum, arbitrage, stop-loss)",
+    "Portfolio risk management and position monitoring",
+    "Live market data processing from Polysights APIs"
   ],
-  "protocols": ["ACP", "Polymarket", "ERC-6551"],
-  "runtime": {
-    "type": "docker",
-    "image": "acp-polymarket-agent:latest",
-    "port": 8000,
-    "health_check": "/health"
+  "supported_platforms": ["polymarket"],
+  "analytics_features": {
+    "sentiment_analysis": ["bullish", "bearish", "neutral", "confidence_scoring"],
+    "market_insights": ["trending_markets", "volume_analysis", "price_momentum"],
+    "insider_tracking": ["wallet_analysis", "large_position_detection", "pattern_recognition"],
+    "opportunity_detection": ["arbitrage_opportunities", "momentum_signals", "value_identification"]
   },
-  "resources": {
-    "cpu": "1000m",
-    "memory": "2Gi",
-    "storage": "10Gi"
+  "data_sources": [
+    "polysights_tables_api",
+    "open_interest_api", 
+    "orderbook_api",
+    "wallet_tracker_api",
+    "leaderboard_api",
+    "charts_api",
+    "top_buys_api"
+  ],
+  "compliance": {
+    "kyc_required": false,
+    "trading_method": "wallet_signatures",
+    "regulatory_status": "decentralized_trading_only",
+    "risk_disclosure": "Trading involves risk of loss. Users trade with their own wallets and funds.",
+    "data_privacy": "No personal information collected - wallet-based authentication only"
   },
-  "environment": {
-    "required": [
-      "POLYMARKET_API_KEY",
-      "POLYMARKET_SECRET", 
-      "POLYMARKET_PASSPHRASE",
-      "ACP_WALLET_PRIVATE_KEY",
-      "DATABASE_URL",
-      "VIRTUAL_TOKEN_ADDRESS"
+  "technical_specs": {
+    "runtime": "python_3.11",
+    "frameworks": ["fastapi", "aiohttp", "asyncio"],
+    "caching": "in_memory_5min_ttl",
+    "deployment": "cloud_container",
+    "trading_apis": [
+      "Polymarket CLOB REST API",
+      "Polymarket WebSocket streams",
+      "py-clob-client SDK integration"
     ],
-    "optional": [
-      "POLYSIGHTS_API_KEY",
-      "BASE_RPC_URL",
-      "VIRTUALS_API_URL"
+    "analytics_apis": [
+      "Polysights Tables API",
+      "Polysights Open Interest API", 
+      "Polysights Orderbook API",
+      "Polysights Wallet Tracker API",
+      "Polysights Leaderboard API",
+      "Polysights Charts API",
+      "Polysights Top Buys API"
     ]
   },
-  "endpoints": {
-    "health": "/health",
-    "status": "/",
-    "services": "/services",
-    "dashboard": "/dashboard",
-    "api": "/docs"
+  "api_endpoints": {
+    "health": "/analytics/health",
+    "overview": "/analytics/overview",
+    "market_analysis": "/analytics/market/{market_id}",
+    "sentiment": "/analytics/sentiment/{market_id}",
+    "insider": "/analytics/insider",
+    "opportunities": "/analytics/opportunities",
+    "portfolio": "/analytics/portfolio",
+    "trending": "/analytics/trending",
+    "top_buys": "/analytics/top-buys",
+    "leaderboard": "/analytics/leaderboard",
+    "charts": "/analytics/charts/{market_id}",
+    "agent_summary": "/analytics/agent/summary",
+    "agent_analyze": "/analytics/agent/analyze",
+    "agent_status": "/analytics/agent/status",
+    "trading": "/trading",
+    "orders": "/trading/orders",
+    "positions": "/trading/positions",
+    "account": "/trading/account"
   },
-  "permissions": {
-    "network": ["api.polymarket.com", "base.org", "virtuals.io"],
-    "storage": ["read", "write"],
-    "wallet": ["sign", "transact"]
-  },
+  "service_offerings": [
+    {
+      "name": "Analytics Only",
+      "description": "Market intelligence without trading",
+      "price_tier": "free",
+      "features": ["Market analytics", "Sentiment analysis", "Opportunity detection"]
+    },
+    {
+      "name": "Analytics + Manual Trading",
+      "description": "Analytics with manual trade execution",
+      "price_tier": "premium", 
+      "features": ["Full analytics", "Manual order placement", "Portfolio tracking"]
+    },
+    {
+      "name": "Full Auto-Trading",
+      "description": "Complete automated trading with analytics",
+      "price_tier": "enterprise",
+      "features": ["All analytics", "Automated strategies", "Risk management", "24/7 monitoring"]
+    }
+  ],
   "pricing": {
-    "model": "usage_based",
-    "base_fee": "10 VIRTUAL/day",
-    "transaction_fee": "0.1% of trade volume"
+    "free_tier": {
+      "requests_per_hour": 100,
+      "features": ["basic_sentiment", "trending_markets"]
+    },
+    "premium_tier": {
+      "requests_per_hour": 1000,
+      "features": ["full_analytics", "insider_tracking", "portfolio_analysis"]
+    },
+    "enterprise_tier": {
+      "requests_per_hour": 5000,
+      "features": ["all_analytics", "automated_trading", "risk_management"]
+    }
+  },
+  "contact": {
+    "developer": "ACP Development Team",
+    "support": "support@acp-analytics.com",
+    "documentation": "https://docs.acp-analytics.com"
   }
 }
