@@ -38,7 +38,9 @@
   },
   "technical_specs": {
     "runtime": "python_3.11",
-    "frameworks": ["fastapi", "aiohttp", "asyncio"],
+    "frameworks": ["fastapi", "aiohttp", "asyncio", "virtuals_game_framework"],
+    "ai_framework": "virtuals_game_sdk",
+    "agent_architecture": "game_agent_worker_function",
     "caching": "in_memory_5min_ttl",
     "deployment": "cloud_container",
     "trading_apis": [
@@ -54,6 +56,13 @@
       "Polysights Leaderboard API",
       "Polysights Charts API",
       "Polysights Top Buys API"
+    ],
+    "ai_capabilities": [
+      "Autonomous decision making via G.A.M.E. framework",
+      "High-level strategic planning (Agent)",
+      "Specialized task execution (Workers)",
+      "Real-time function execution",
+      "Natural language processing for user interactions"
     ]
   },
   "api_endpoints": {
@@ -71,6 +80,10 @@
     "agent_summary": "/analytics/agent/summary",
     "agent_analyze": "/analytics/agent/analyze",
     "agent_status": "/analytics/agent/status",
+    "game_chat": "/api/game/chat",
+    "game_autonomous": "/api/game/autonomous/start",
+    "game_recommendations": "/api/game/trading/recommendations",
+    "game_execute": "/api/game/trading/execute",
     "trading": "/trading",
     "orders": "/trading/orders",
     "positions": "/trading/positions",

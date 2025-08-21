@@ -13,8 +13,9 @@ sqlalchemy==2.0.22
 alembic==1.12.0
 loguru==0.7.2
 
-# ACP SDK
-acp-sdk==0.1.0  # Replace with actual ACP SDK version when available
+# Virtuals G.A.M.E. Framework & ACP SDK
+virtuals_sdk>=1.0.0
+virtuals-acp>=1.0.0
 
 # Blockchain & Wallet
 py-clob-client>=0.1.0

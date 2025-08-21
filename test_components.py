@@ -188,7 +188,7 @@ class ComponentTester:
             from app.polysights.client import PolysightsClient
             from app.db.repository import TradeRepository, PositionRepository, AnalysisCacheRepository
             
-            # Create mock dependencies
+            # Create real dependencies
             polymarket_client = PolymarketClient()
             polysights_client = PolysightsClient()
             trade_repo = TradeRepository()

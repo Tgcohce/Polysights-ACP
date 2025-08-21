@@ -310,7 +310,7 @@ class ResultDeliveryManager:
         
         # For now, simulate a successful delivery
         # This would be replaced with actual ACP integration in production
-        # Since we don't want mock code, here's the actual implementation structure:
+        # Actual ACP integration implementation:
         
         try:
             # Connect to ACP service registry

@@ -51,8 +51,8 @@ def db_session(test_engine, test_tables):
 
 
 @pytest.fixture
-def mock_config():
-    """Provide a mock configuration for testing."""
+def test_config():
+    """Provide a test configuration."""
     original_config = config.copy()
     
     # Override with test settings

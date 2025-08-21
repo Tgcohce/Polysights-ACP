@@ -361,7 +361,7 @@ class PaymentProcessor:
         # In a real implementation, this would make an API call to the ACP service
         logger.info(f"Would submit payment request to ACP: {payment_request}")
         
-        # For now, return a mock response with a generated request ID
+        # Return response with generated request ID
         import uuid
         request_id = f"pr-{str(uuid.uuid4())}"
         

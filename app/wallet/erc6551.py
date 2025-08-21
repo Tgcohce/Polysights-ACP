@@ -293,8 +293,7 @@ class SmartWallet:
             
         except Exception as e:
             logger.error(f"Failed to get token balance: {e}")
-            # Return mock balance for development
-            return 100.0
+            raise e
     
     async def transfer_tokens(
         self, 
